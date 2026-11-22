@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Safety Digital Games — Oyunlaştırılmış İSG Eğitimi</title>
+<meta name="description" content="İş güvenliği eğitimini oyuna çevirin: 32 tarayıcı oyunu, canlı kurumsal panel, Güvenlik Ligi ve Eğitim Ormanı. QR okut, oyna, ölç.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1b1410; --ink2:#241d19; --cream:#faf7f2; --cream2:#f1eae0;
+  --copper:#b57b5e; --copper-d:#8f5c43; --copper-l:#d9a78e; --gold:#d6a21a;
+  --green:#2e7d46; --muted:#8a7d74; --line:#e8ddd2; --card:#ffffff;
+  --r:22px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);background:var(--cream);line-height:1.65;overflow-x:hidden;}
+h1,h2,h3,.sora{font-family:'Sora',sans-serif;}
+.wrap{max-width:1140px;margin:0 auto;padding:0 22px;}
+.hazard{height:8px;background:repeating-linear-gradient(135deg,var(--copper) 0 16px,#1b1410 16px 32px);}
+
+/* ====== NAV ====== */
+.nav{position:fixed;top:8px;left:0;right:0;z-index:90;transition:.3s;}
+.navin{
+  max-width:1140px;margin:0 auto;display:flex;align-items:center;gap:16px;
+  padding:10px 18px;border-radius:18px;
+  background:rgba(27,20,16,.55);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border:1px solid rgba(217,167,142,.18);
+}
+@media(max-width:1180px){.navin{margin:0 14px;}}
+.nav.solid .navin{background:rgba(27,20,16,.92);box-shadow:0 10px 30px -12px rgba(0,0,0,.5);}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo svg{height:30px;width:auto;}
+.logo b{color:#f1e9e2;font-family:'Sora',sans-serif;font-size:15px;letter-spacing:.2px;}
+.logo b .a{color:var(--copper-l);}
+.navlinks{display:flex;gap:2px;margin-left:auto;}
+.navlinks a{color:#cdbfb2;text-decoration:none;font-size:13.5px;font-weight:600;padding:8px 13px;border-radius:999px;transition:.18s;}
+.navlinks a:hover{color:#fff;background:rgba(217,167,142,.14);}
+.navcta{
+  margin-left:8px;flex:none;display:inline-flex;align-items:center;gap:7px;
+  background:linear-gradient(135deg,var(--copper),var(--copper-d));color:#fff;
+  text-decoration:none;font-weight:700;font-size:13.5px;padding:10px 18px;border-radius:12px;
+  box-shadow:0 8px 20px -6px rgba(143,92,67,.6);transition:.2s;
+}
+.navcta:hover{transform:translateY(-1px);filter:brightness(1.08);}
+@media(max-width:900px){.navlinks{display:none;}}
+
+/* ====== HERO ====== */
+.hero{
+  position:relative;background:radial-gradient(1100px 600px at 75% -10%,#3a2a20 0%,var(--ink) 55%);
+  color:#f1e9e2;padding:150px 0 110px;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;opacity:.35;pointer-events:none;
+  background-image:linear-gradient(rgba(217,167,142,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(217,167,142,.12) 1px,transparent 1px);
+  background-size:56px 56px;
+  mask-image:radial-gradient(700px 500px at 30% 30%,#000 10%,transparent 75%);
+  -webkit-mask-image:radial-gradient(700px 500px at 30% 30%,#000 10%,transparent 75%);
+}
+.hero::after{
+  content:'';position:absolute;width:560px;height:560px;border-radius:50%;right:-120px;top:-80px;pointer-events:none;
+  background:radial-gradient(circle,rgba(181,123,94,.35),transparent 65%);
+}
+.herogrid{position:relative;display:grid;grid-template-columns:1.08fr .92fr;gap:40px;align-items:center;}
+@media(max-width:920px){.herogrid{grid-template-columns:1fr;}.phonewrap{margin:40px auto 0;}}
+.kicker{
+  display:inline-flex;align-items:center;gap:9px;background:rgba(217,167,142,.12);
+  border:1px solid rgba(217,167,142,.35);color:var(--copper-l);
+  border-radius:999px;padding:8px 16px;font-size:13px;font-weight:700;margin-bottom:24px;
+}
+.kicker .dot{width:8px;height:8px;border-radius:50%;background:#5fd38a;box-shadow:0 0 12px #5fd38a;animation:blink 2.2s infinite;}
+@keyframes blink{50%{opacity:.5;}}
+.hero h1{font-size:clamp(36px,5.6vw,60px);line-height:1.07;letter-spacing:-1.6px;font-weight:800;text-wrap:balance;}
+.hero h1 .a{background:linear-gradient(100deg,#e8b894,#c98f6f 50%,#a56a48);-webkit-background-clip:text;background-clip:text;color:transparent;}
+.hero p.lead{color:#c3b5a8;font-size:clamp(16px,1.9vw,19px);margin-top:22px;max-width:540px;}
+.ctas{display:flex;gap:13px;margin-top:34px;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:9px;border-radius:15px;padding:16px 28px;font-weight:700;font-size:15.5px;text-decoration:none;transition:.2s;cursor:pointer;border:none;font-family:'Inter',sans-serif;}
+.btn.primary{color:#fff;background:linear-gradient(135deg,var(--copper),var(--copper-d));box-shadow:0 14px 34px -10px rgba(181,123,94,.65);}
+.btn.primary:hover{transform:translateY(-2px);filter:brightness(1.07);}
+.btn.dark-ghost{color:#f1e9e2;background:rgba(255,255,255,.06);border:1.5px solid rgba(217,167,142,.4);}
+.btn.dark-ghost:hover{background:rgba(217,167,142,.14);transform:translateY(-2px);}
+.herometa{display:flex;gap:26px;margin-top:40px;flex-wrap:wrap;}
+.hm b{display:block;font-family:'Sora',sans-serif;font-size:28px;color:#e8b894;line-height:1.1;font-variant-numeric:tabular-nums;}
+.hm span{font-size:12.5px;color:#9d8e81;font-weight:600;letter-spacing:.3px;}
+
+/* telefon mockup */
+.phonewrap{position:relative;width:300px;justify-self:center;}
+.phone{
+  width:300px;border-radius:42px;background:#0e0a08;padding:12px;
+  box-shadow:0 40px 90px -20px rgba(0,0,0,.65),0 0 0 2px rgba(217,167,142,.25),inset 0 0 0 2px #2a211b;
+  transform:rotate(-3deg);animation:phoneFloat 7s ease-in-out infinite;
+}
+@keyframes phoneFloat{0%,100%{transform:rotate(-3deg) translateY(0);}50%{transform:rotate(-3deg) translateY(-12px);}}
+.screen{border-radius:32px;overflow:hidden;background:#241d19;color:#f1e9e2;font-size:11px;}
+.scr-prog{height:4px;background:rgba(255,255,255,.12);}
+.scr-prog i{display:block;height:100%;width:40%;background:linear-gradient(90deg,var(--copper-l),var(--copper));}
+.scr-top{background:linear-gradient(135deg,var(--copper),var(--copper-d));color:#fff;padding:14px 14px 12px;}
+.scr-top .t{font-family:'Sora',sans-serif;font-weight:800;font-size:13px;display:flex;justify-content:space-between;align-items:center;}
+.scr-top .pill{background:rgba(255,255,255,.22);border-radius:999px;padding:2px 9px;font-size:9.5px;font-weight:700;}
+.scr-q{padding:13px 14px 5px;font-weight:700;font-size:11.5px;line-height:1.45;}
+.scr-opt{margin:7px 12px;padding:9px 11px;border:1.5px solid rgba(255,255,255,.14);border-radius:11px;background:rgba(255,255,255,.05);font-size:10.5px;font-weight:600;display:flex;align-items:center;gap:8px;}
+.scr-opt .L{flex:none;width:18px;height:18px;border-radius:6px;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#d9a78e;}
+.scr-opt.ok{border-color:#5fd38a;background:rgba(46,158,91,.22);position:relative;}
+.scr-opt.ok .L{background:#2e9e5b;color:#fff;}
+.scr-opt.ok::after{content:'✓';position:absolute;right:9px;color:#5fd38a;font-weight:900;}
+.scr-score{display:flex;justify-content:space-between;align-items:center;padding:11px 14px 14px;font-weight:800;font-size:10.5px;color:#e8b894;}
+.scr-score .drop{color:#7fb3ff;}
+.fchip{
+  position:absolute;background:#fff;color:#241d19;border-radius:14px;padding:9px 14px;
+  font-weight:800;font-size:12.5px;box-shadow:0 16px 36px -10px rgba(0,0,0,.45);white-space:nowrap;
+}
+.fchip small{display:block;font-size:9.5px;color:#8a7d74;font-weight:600;}
+.fc1{top:36px;left:-74px;animation:chipFloat 5.4s ease-in-out infinite;}
+.fc2{bottom:104px;right:-66px;animation:chipFloat 6.2s .7s ease-in-out infinite;}
+.fc3{bottom:-16px;left:-40px;animation:chipFloat 5.8s .3s ease-in-out infinite;}
+@keyframes chipFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+@media(max-width:920px){.fc1{left:-10px;}.fc2{right:-8px;}.fc3{left:6px;}}
+
+/* ====== GÜVEN ŞERİDİ ====== */
+.trust{background:var(--ink2);color:#b7a899;padding:18px 0;border-top:1px solid rgba(217,167,142,.12);}
+.trustin{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;font-size:13px;font-weight:600;}
+.trustin span{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border:1px solid rgba(217,167,142,.2);border-radius:999px;}
+
+/* ====== GENEL BÖLÜM ====== */
+section{padding:84px 0;}
+.pre{color:var(--copper-d);font-weight:800;font-size:13px;letter-spacing:2.6px;text-transform:uppercase;}
+h2.sec{font-size:clamp(28px,3.8vw,40px);letter-spacing:-1px;margin-top:10px;text-wrap:balance;}
+p.sub{color:var(--muted);margin-top:14px;max-width:640px;font-size:16.5px;}
+
+/* setler */
+.sets{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin-top:44px;}
+.set{
+  position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  padding:26px 22px;box-shadow:0 2px 6px rgba(36,29,25,.05),0 14px 36px -14px rgba(36,29,25,.13);
+  transition:.25s;overflow:hidden;text-decoration:none;color:var(--ink);display:block;
+}
+.set::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:var(--hue);}
+.set:hover{transform:translateY(-6px);box-shadow:0 6px 12px rgba(36,29,25,.07),0 30px 54px -16px rgba(143,92,67,.32);}
+.set .emo{font-size:30px;letter-spacing:4px;}
+.set h3{font-size:18px;margin:12px 0 6px;letter-spacing:-.3px;}
+.set p{color:var(--muted);font-size:13.8px;}
+.set .cnt{
+  position:absolute;top:18px;right:18px;background:color-mix(in srgb,var(--hue) 14%,#fff);
+  border:1px solid color-mix(in srgb,var(--hue) 35%,var(--line));color:var(--ink);
+  border-radius:999px;padding:3px 12px;font-size:12px;font-weight:800;
+}
+.set .go{margin-top:14px;display:inline-block;color:var(--copper-d);font-weight:700;font-size:13.5px;}
+
+/* ====== PANEL ====== */
+.panelsec{background:linear-gradient(180deg,var(--cream),var(--cream2));}
+.panelgrid{display:grid;grid-template-columns:1fr 1fr;gap:54px;align-items:center;margin-top:20px;}
+@media(max-width:920px){.panelgrid{grid-template-columns:1fr;}}
+.browser{
+  border-radius:18px;overflow:hidden;background:#fff;border:1px solid var(--line);
+  box-shadow:0 44px 90px -26px rgba(36,29,25,.35);
+}
+.bbar{display:flex;align-items:center;gap:7px;background:#241d19;padding:11px 14px;}
+.bbar i{width:11px;height:11px;border-radius:50%;display:block;}
+.bbar i:nth-child(1){background:#e0564f;}.bbar i:nth-child(2){background:#e5a63c;}.bbar i:nth-child(3){background:#54b568;}
+.bbar span{margin-left:10px;color:#9d8e81;font-size:11px;font-weight:600;background:rgba(255,255,255,.08);border-radius:7px;padding:3px 12px;}
+.dash{padding:18px;}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;}
+.kpi{background:var(--cream);border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center;}
+.kpi b{display:block;font-family:'Sora',sans-serif;font-size:19px;color:var(--copper-d);}
+.kpi span{font-size:9.5px;color:var(--muted);font-weight:700;}
+.dash h5{font-size:11px;color:var(--muted);margin:15px 0 8px;letter-spacing:1px;}
+.dbar{margin-bottom:9px;}
+.dbar .t{display:flex;justify-content:space-between;font-size:10.5px;font-weight:700;margin-bottom:3px;}
+.dbar .tr{height:8px;background:var(--cream2);border-radius:5px;overflow:hidden;}
+.dbar .tr i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--copper-l),var(--copper-d));border-radius:5px;transition:width 1.2s cubic-bezier(.2,.7,.3,1);}
+.features{list-style:none;margin-top:26px;}
+.features li{display:flex;gap:14px;margin-bottom:20px;}
+.features .fi{
+  flex:none;width:44px;height:44px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:21px;
+  background:linear-gradient(135deg,#fff,var(--cream2));border:1px solid var(--line);box-shadow:0 6px 14px -6px rgba(36,29,25,.15);
+}
+.features b{font-family:'Sora',sans-serif;font-size:15.5px;display:block;margin-bottom:2px;}
+.features p{color:var(--muted);font-size:13.8px;}
+
+/* ====== LİG & ORMAN ====== */
+.ligsec{background:var(--ink);color:#f1e9e2;position:relative;overflow:hidden;}
+.ligsec::before{content:'';position:absolute;width:520px;height:520px;border-radius:50%;left:-160px;bottom:-200px;background:radial-gradient(circle,rgba(46,125,70,.3),transparent 65%);}
+.liggrid{display:grid;grid-template-columns:1fr 1fr;gap:54px;align-items:center;position:relative;}
+@media(max-width:920px){.liggrid{grid-template-columns:1fr;}}
+.ligsec .pre{color:#e8b894;}
+.ligsec p.sub{color:#b7a899;}
+.fixture{background:rgba(255,255,255,.05);border:1px solid rgba(217,167,142,.2);border-radius:18px;padding:20px;backdrop-filter:blur(4px);}
+.fx{display:flex;align-items:center;gap:12px;padding:10px 8px;border-bottom:1px dashed rgba(217,167,142,.18);font-size:13.5px;font-weight:600;}
+.fx:last-child{border-bottom:none;}
+.fx .w{flex:none;width:34px;height:34px;border-radius:10px;background:rgba(217,167,142,.14);display:flex;align-items:center;justify-content:center;font-weight:800;color:#e8b894;font-size:12px;}
+.fx small{margin-left:auto;color:#9d8e81;font-weight:600;}
+.forest{margin-top:22px;background:rgba(46,125,70,.14);border:1px solid rgba(95,211,138,.3);border-radius:18px;padding:18px 20px;}
+.forest .trees{font-size:26px;letter-spacing:5px;}
+.forest .grow{display:inline-block;animation:grow 3.2s steps(1) infinite;}
+.forest p{font-size:13px;color:#b7cdb9;margin-top:8px;}
+@keyframes grow{0%{opacity:1;}100%{opacity:1;}}
+
+/* ====== ADIMLAR ====== */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:44px;}
+.step{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:26px 22px;position:relative;box-shadow:0 2px 6px rgba(36,29,25,.05),0 14px 36px -14px rgba(36,29,25,.13);transition:.25s;}
+.step:hover{transform:translateY(-5px);}
+.step .n{
+  width:40px;height:40px;border-radius:13px;background:linear-gradient(135deg,var(--copper),var(--copper-d));
+  color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-weight:800;font-size:17px;margin-bottom:16px;
+  box-shadow:0 10px 20px -6px rgba(143,92,67,.5);
+}
+.step b{font-family:'Sora',sans-serif;display:block;font-size:16px;margin-bottom:6px;}
+.step p{color:var(--muted);font-size:13.8px;}
+
+/* ====== CTA ====== */
+.ctaband{
+  position:relative;border-radius:30px;overflow:hidden;
+  background:linear-gradient(120deg,#241d19,#4a3426 55%,#6f4a1f);color:#f1e9e2;
+  padding:64px 56px;box-shadow:0 40px 80px -24px rgba(36,29,25,.5);
+}
+.ctaband::after{content:'';position:absolute;inset:0;background:radial-gradient(460px 340px at 85% 20%,rgba(232,184,148,.4),transparent 70%);pointer-events:none;}
+.ctaband h2{font-size:clamp(26px,3.8vw,38px);letter-spacing:-.8px;max-width:600px;position:relative;z-index:1;}
+.ctaband p{color:#cdbfb2;margin:16px 0 30px;max-width:560px;position:relative;z-index:1;}
+.ctaband .ctas{margin:0;position:relative;z-index:1;}
+@media(max-width:640px){.ctaband{padding:40px 26px;}}
+
+/* ====== FOOTER ====== */
+footer{background:var(--ink);color:#9d8e81;padding:46px 0 54px;font-size:13.5px;}
+.fgrid{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;align-items:center;}
+footer b{color:#f1e9e2;font-family:'Sora',sans-serif;}
+footer a{color:#e8b894;text-decoration:none;font-weight:600;}
+footer a:hover{text-decoration:underline;}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .65s ease,transform .65s ease;}
+.rv.in{opacity:1;transform:none;}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}.rv{opacity:1;transform:none;}html{scroll-behavior:auto;}}
+</style>
+</head>
+<body>
+
+<div class="hazard"></div>
+
+<nav class="nav" id="nav">
+  <div class="navin">
+    <a class="logo" href="#">
+      <svg viewBox="0 0 56 60" aria-hidden="true"><defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c08a6d"/><stop offset="1" stop-color="#e6bba3"/></linearGradient></defs><polygon fill="url(#g1)" points="0,6 13,6 36,30 13,54 0,54 23,30"/><polygon fill="#8f5c43" points="30,14 45,30 30,46 39,46 55,30 39,14"/></svg>
+      <b>Safety <span class="a">Digital</span> Games</b>
+    </a>
+    <div class="navlinks">
+      <a href="#oyunlar">Oyun Setleri</a>
+      <a href="#panel">Kurumsal Panel</a>
+      <a href="#lig">Güvenlik Ligi</a>
+      <a href="#nasil">Nasıl Çalışır</a>
+    </div>
+    <a class="navcta" href="https://lprslnylmz-dot.github.io/SafetyDigitalApp/" target="_blank" rel="noopener">Platformu Aç →</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap herogrid">
+    <div>
+      <div class="kicker rv"><span class="dot"></span> 2026 İSG Eğitim Yönetmeliği ile uyumlu</div>
+      <h1 class="rv">İş güvenliği eğitimini <span class="a">oyuna çevirin.</span></h1>
+      <p class="lead rv">Çalışanlar QR okutur, telefonda yarışır; skorlar kurumsal panele canlı akar. Sıkıcı sunumların yerini 32 oyun, haftalık lig ve büyüyen bir Eğitim Ormanı alır.</p>
+      <div class="ctas rv">
+        <a class="btn primary" href="https://lprslnylmz-dot.github.io/SafetyDigitalApp/" target="_blank" rel="noopener">🎮 Oyunları Keşfet</a>
+        <a class="btn dark-ghost" href="#panel">📊 Paneli Gör</a>
+      </div>
+      <div class="herometa rv">
+        <div class="hm"><b data-n="32">32</b><span>EĞİTİM OYUNU</span></div>
+        <div class="hm"><b data-n="122">122</b><span>SORULUK HAVUZ</span></div>
+        <div class="hm"><b data-n="6">6</b><span>OYUN SETİ</span></div>
+        <div class="hm"><b>%100</b><span>TARAYICIDA</span></div>
+      </div>
+    </div>
+
+    <div class="phonewrap rv">
+      <div class="fchip fc1">🏆 +120 puan<small>Alev Avcısı · Soru 7/10</small></div>
+      <div class="fchip fc2">💧 +7 can suyu<small>Eğitim Ormanı büyüyor</small></div>
+      <div class="fchip fc3">🥇 Yeni ünvan!<small>Haftanın Yıldızı</small></div>
+      <div class="phone">
+        <div class="screen">
+          <div class="scr-top">
+            <div class="t"><span>🔥 Alev Avcısı</span><span class="pill">GÜVENLİK LİGİ</span></div>
+          </div>
+          <div class="scr-prog"><i></i></div>
+          <div class="scr-q">Yangının oluşması için bir araya gelmesi gereken üç unsur hangileridir?</div>
+          <div class="scr-opt ok"><span class="L">A</span> Isı, oksijen, yanıcı madde</div>
+          <div class="scr-opt"><span class="L">B</span> Duman, alev, kıvılcım</div>
+          <div class="scr-opt"><span class="L">C</span> Elektrik, su, yakıt</div>
+          <div class="scr-score"><span>⭐ 840 puan</span><span class="drop">💧 8 can suyu</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="trust">
+  <div class="wrap trustin">
+    <span>✅ Uygulama kurulumu yok</span>
+    <span>📋 2026 Yönetmeliği uyumlu</span>
+    <span>🔒 KVKK dostu veri akışı</span>
+    <span>🏭 Referans uygulama: Tüprag Kışladağ</span>
+  </div>
+</div>
+
+<section id="oyunlar">
+  <div class="wrap">
+    <div class="rv"><div class="pre">Oyun Kataloğu</div>
+    <h2 class="sec">Her eğitim anına uygun bir format</h2>
+    <p class="sub">EKED simülasyonundan milyoner yarışmasına, Stroop testinden çapraz bulmacaya — 6 set, 32 oyun. Hepsi tek bağlantı, hepsi telefonda.</p></div>
+    <div class="sets">
+      <a class="set rv" style="--hue:#b57b5e" href="https://lprslnylmz-dot.github.io/SafetyDigitalApp/#suite-gen" target="_blank" rel="noopener">
+        <span class="cnt">8 oyun</span><div class="emo">🔒📚⚖️</div>
+        <h3>Genel Endüstri</h3><p>EKED / LOTOTO temel seti: 16 adım, cihazlar, tanımlar, risk algısı ve dikkat testleri.</p>
+        <span class="go">Seti incele →</span>
+      </a>
+      <a class="set rv" style="--hue:#d6a21a" href="https://lprslnylmz-dot.github.io/SafetyDigitalApp/#suite-klasik" target="_blank" rel="noopener">
+        <span class="cnt">8 oyun</span><div class="emo">🎡📦🔨</div>
+        <h3>Hızlı Oyunlar</h3><p>Çarkıfelek, kutu açma, hafıza kartları, balon patlatma — sınıfı ayağa kaldıran klasikler.</p>
+        <span class="go">Seti incele →</span>
+      </a>
+      <a class="set rv" style="--hue:#c25546" href="https://lprslnylmz-dot.github.io/SafetyDigitalApp/#suite-lig" target="_blank" rel="noopener">
+        <span class="cnt">4 oyun</span><div class="emo">🔥🚑⚡</div>
+        <h3>Güvenlik Ligi</h3><p>Yönetmelik konularını bölümler arası haftalık maçlara çeviren kurumsal lig sistemi.</p>
+        <span class="go">Seti incele →</span>
+      </a>
+      <a class="set rv" style="--hue:#9a6b33" href="https://lprslnylmz-dot.github.io/SafetyDigitalApp/#suite-mdf" target="_blank" rel="noopener">
+        <span class="cnt">7 oyun</span><div class="emo">🏭🚨📋</div>
+        <h3>Yonga Levha / MDF</h3><p>Sıcak pres, toz silosu, termik yağ... Levha fabrikasının gerçek senaryolarıyla.</p>
+        <span class="go">Seti incele →</span>
+      </a>
+      <a class="set rv" style="--hue:#b8912f" href="https://lprslnylmz-dot.github.io/SafetyDigitalApp/#suite-maden" target="_blank" rel="noopener">
+        <span class="cnt">2 oyun</span><div class="emo">⛏️🪙</div>
+        <h3>Madencilik</h3><p>Altın madenine uyarlanmış LOTOTO ve grup kilitleme prosedürü oyunları.</p>
+        <span class="go">Seti incele →</span>
+      </a>
+      <a class="set rv" style="--hue:#a09486" href="https://elototo.com" target="_blank" rel="noopener">
+        <span class="cnt">1-2 gün</span><div class="emo">🏗️🚗✨</div>
+        <h3>Sektörünüze Özel</h3><p>Prosedürünüzü ve saha fotoğraflarınızı gönderin; tam setiniz kurumunuza uyarlansın.</p>
+        <span class="go">Teklif alın →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="panelsec" id="panel">
+  <div class="wrap">
+    <div class="rv"><div class="pre">Kurumsal Panel</div>
+    <h2 class="sec">Oynanan her maç, panelde bir veri</h2></div>
+    <div class="panelgrid">
+      <div class="browser rv" id="dashMock">
+        <div class="bbar"><i></i><i></i><i></i><span>kurumsal-panel · canlı</span></div>
+        <div class="dash">
+          <div class="kpis">
+            <div class="kpi"><b>248</b><span>TOPLAM MAÇ</span></div>
+            <div class="kpi"><b>63</b><span>KATILIMCI</span></div>
+            <div class="kpi"><b>812</b><span>ORT. PUAN</span></div>
+            <div class="kpi"><b>💧 1.9K</b><span>CAN SUYU</span></div>
+          </div>
+          <h5>BÖLÜM KARŞILAŞTIRMA</h5>
+          <div class="dbar"><div class="t"><span>BAKIM</span><span>86 maç</span></div><div class="tr"><i data-w="92%"></i></div></div>
+          <div class="dbar"><div class="t"><span>ÜRETİM</span><span>74 maç</span></div><div class="tr"><i data-w="78%"></i></div></div>
+          <div class="dbar"><div class="t"><span>KALİTE</span><span>52 maç</span></div><div class="tr"><i data-w="55%"></i></div></div>
+          <div class="dbar"><div class="t"><span>LOJİSTİK</span><span>36 maç</span></div><div class="tr"><i data-w="38%"></i></div></div>
+        </div>
+      </div>
+      <div>
+        <ul class="features">
+          <li class="rv"><div class="fi">📡</div><div><b>Skorlar kendiliğinden akar</b><p>Oyun biter bitmez sonuç panele düşer: kim, hangi bölümden, hangi oyunu, kaç puanla.</p></div></li>
+          <li class="rv"><div class="fi">👤</div><div><b>Kişi karnesi</b><p>Her çalışanın oyun geçmişi, güçlü ve zayıf konuları tek tıkla; denetim için CSV raporu hazır.</p></div></li>
+          <li class="rv"><div class="fi">🖨️</div><div><b>QR Atölyesi</b><p>Firma ve bölüm etiketli oyun posterlerini tarayıcıda üretin, yazdırın, panoya asın.</p></div></li>
+          <li class="rv"><div class="fi">📈</div><div><b>Etki değerlendirmesi</b><p>2026 yönetmeliğinin istediği eğitim etkinliği takibi için ölçülebilir, tarihli, kişi bazlı kayıt.</p></div></li>
+        </ul>
+        <a class="btn primary rv" href="https://lprslnylmz-dot.github.io/SafetyDigitalApp/kurumsal-panel.html" target="_blank" rel="noopener">Canlı Paneli Aç →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ligsec" id="lig">
+  <div class="wrap liggrid">
+    <div>
+      <div class="pre rv">Güvenlik Ligi + Eğitim Ormanı</div>
+      <h2 class="sec rv">Bölümler yarışır,<br>fabrika kazanır 🌳</h2>
+      <p class="sub rv">Yönetmelikteki her eğitim konusu bir hafta, her hafta bir maç: yangın, ilk yardım, elektrik, KKD... Toplanan her 100 puan Eğitim Ormanı'na bir damla can suyu olur — sezon şampiyonunun ormanı, gerçek fidanlarla toprağa dikilir.</p>
+      <div class="forest rv">
+        <div class="trees">🌳🌳🌳🌿<span class="grow">🌱</span></div>
+        <p>BAKIM bölümünün ormanı: 3 ağaç tamamlandı, 4.sü büyüyor… Sezon sonunda her ağaç = 1 gerçek fidan.</p>
+      </div>
+    </div>
+    <div class="fixture rv">
+      <div class="fx"><span class="w">H1</span> 🔥 Alev Avcısı <small>Yangın</small></div>
+      <div class="fx"><span class="w">H2</span> 🚑 İlk 5 Dakika <small>İlk Yardım</small></div>
+      <div class="fx"><span class="w">H3</span> ⚡ Ark Dedektifi <small>Elektrik</small></div>
+      <div class="fx"><span class="w">H4</span> 🦺 Zırh Ustası <small>KKD</small></div>
+      <div class="fx"><span class="w">H5</span> 🔒 LOTOTO 16 Adım <small>EKED</small></div>
+      <div class="fx"><span class="w">H6</span> ⚖️ Risk Terazisi <small>Risk Algısı</small></div>
+      <div class="fx"><span class="w">H7</span> 🎯 Dikkat Dedektörü <small>İşaretler</small></div>
+      <div class="fx"><span class="w">H8</span> 👑 DERBİ — Sezon Finali <small>Karma</small></div>
+    </div>
+  </div>
+</section>
+
+<section id="nasil">
+  <div class="wrap">
+    <div class="rv"><div class="pre">Nasıl Çalışır</div>
+    <h2 class="sec">Pazartesi kurun, salı yarışın</h2></div>
+    <div class="steps">
+      <div class="step rv"><div class="n">1</div><b>QR posterleri asın</b><p>QR Atölyesi'nden bölüm etiketli posterleri üretin; yemekhaneye, panoya, tezgâh başına asın.</p></div>
+      <div class="step rv"><div class="n">2</div><b>Çalışanlar oynasın</b><p>Telefon kamerası yeter: ad-soyad yazılır, maç başlar. Her doğru cevap puan, alkış ve ünvan getirir.</p></div>
+      <div class="step rv"><div class="n">3</div><b>Panelden izleyin</b><p>Katılım, bölüm sıralaması ve kişi karneleri canlı; haftalık lig puanları tek bakışta.</p></div>
+      <div class="step rv"><div class="n">4</div><b>Ormanı büyütün</b><p>Sezon sonunda şampiyon bölümün ağaçları gerçek fidana dönüşür; sertifikası törenle verilir.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="ctaband rv">
+      <h2>Bir sonraki İSG eğitiminiz, salondaki en sessiz çalışanı bile yarıştırsın.</h2>
+      <p>Demo oturumu planlayalım: 15 dakikada platformu gezelim, sektörünüze özel uyarlama ve lig kurulumunu konuşalım.</p>
+      <div class="ctas">
+        <a class="btn primary" href="https://elototo.com" target="_blank" rel="noopener">📞 Demo Talep Et</a>
+        <a class="btn dark-ghost" href="https://lprslnylmz-dot.github.io/SafetyDigitalApp/" target="_blank" rel="noopener">Önce Kendim Deneyeyim</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap fgrid">
+    <div><b>Safety Digital Games</b><br>EKED | LOTOTO — Etiketle, Kilitle, Emniyete Al, Dene</div>
+    <div>Yanki Solutions · Yankı Akademi<br><a href="https://elototo.com" target="_blank" rel="noopener">elototo.com</a></div>
+  </div>
+</footer>
+
+<script>
+"use strict";
+var nav=document.getElementById('nav');
+addEventListener('scroll',function(){ nav.classList.toggle('solid',scrollY>40); },{passive:true});
+
+var reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+var io=new IntersectionObserver(function(es){
+  es.forEach(function(e){
+    if(!e.isIntersecting) return;
+    e.target.classList.add('in');
+    if(e.target.id==='dashMock'){
+      e.target.querySelectorAll('.tr i').forEach(function(b){ b.style.width=b.getAttribute('data-w'); });
+    }
+    io.unobserve(e.target);
+  });
+},{threshold:.14});
+document.querySelectorAll('.rv').forEach(function(e){ io.observe(e); });
+
+if(!reduced){
+  document.querySelectorAll('.hm b[data-n]').forEach(function(el){
+    var n=parseInt(el.getAttribute('data-n'),10), t0=null;
+    function tick(ts){ if(!t0) t0=ts; var p=Math.min(1,(ts-t0)/1000);
+      el.textContent=Math.round(n*(1-Math.pow(1-p,3))); if(p<1) requestAnimationFrame(tick); }
+    requestAnimationFrame(tick);
+  });
+  var seq=['🌰','🌱','🌿','🌳'], gi=0;
+  setInterval(function(){ gi=(gi+1)%seq.length;
+    document.querySelectorAll('.grow').forEach(function(g){ g.textContent=seq[gi]; });
+  },900);
+}
+</script>
+</body>
+</html>
